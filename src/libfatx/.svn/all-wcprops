@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/26/trunk/src/libfatx
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/26/trunk/src/libfatx/Makefile.am
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/26/trunk/src/libfatx/Makefile.in
+END
+fatx.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/22/trunk/src/libfatx/fatx.c
+END

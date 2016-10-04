@@ -1,0 +1,44 @@
+--- src/libfatx/fatx.c	(revision 26)
++++ src/libfatx/fatx.c	(working copy)
+@@ -324,6 +324,7 @@
+ 			return -1;
+ 		}
+ 		if ((cluster & 0xFFFFFFF) > 0xFFFFFF5) { // last cluster
++			fprintf(stderr,"fatx_next_cluster called for last cluster: %d!\n",cluster);
+ 			return -2;
+ 		}
+ 		return cluster;
+@@ -342,7 +343,8 @@
+ 			return -1;
+ 		}
+ 		if (cluster > 0xFFF5) { // last cluster
+-			return -1;
++			fprintf(stderr,"fatx_next_cluster called for last cluster: %d!\n",cluster);
++			return -2;
+ 		}
+ 		return cluster;
+ 	}
+@@ -461,6 +463,9 @@
+ 	data_offset = offsets.data_offset;
+ 	for (i = 0; i < (offset >> 14); i++) {
+ 		data_offset = fatx_next_cluster_offset(info, data_offset);
++
++		if((data_offset == -2) && ((offset - ((off_t)(i) << 14)) == 16384)) return 0; //handle case where file size % 16384 == 0 && fuse requests read at EOF; return 0
++		if((data_offset == -2) && ((offset - ((off_t)(i) << 14)) > 16384)) return -1; //handle case where file size % 16384 == 0 && fuse requests read past EOF; error  condition
+ 		if (data_offset < 0) return -1;
+ 	}
+ 	offset -= (off_t)(i) << 14;
+@@ -468,7 +473,13 @@
+ 	for (i = 0; i < ((offset + size) >> 14); i++) {
+ 		read += pread(info->fd, (uint8_t *)(buffer) + read, 0x4000 - offset, data_offset + offset);
+ 		offset = 0;
++		
+ 		data_offset = fatx_next_cluster_offset(info, data_offset);
++		fprintf(stderr,"%d %d\n",read,size);
++		if ((data_offset == -2) && (size - read == 0)) { //handle case of offset + size % 16384 == 0 cleanly; return requested bytes up to EOF 
++			return read;
++		}
++
+ 		if (data_offset < 0) return -1;
+ 	}
+ 	size -= (off_t)(i) << 14;

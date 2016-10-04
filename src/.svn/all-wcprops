@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/26/trunk/src
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/25/trunk/src/Makefile.am
+END
+xpart-dm
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/22/trunk/src/xpart-dm
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/25/trunk/src/Makefile.in
+END
+xpart-loop
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/22/trunk/src/xpart-loop
+END
